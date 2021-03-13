@@ -1,0 +1,21 @@
+@media (max-width: 767px) {
+	.header .list__item a {
+		font-size: 1.2rem;
+	}
+	.footer__container p, .footer__container .footer__title {
+		font-size: 1.6rem;
+	}
+
+	.footer__container p {
+		margin-top: 0;
+	}
+
+	.main {
+	    padding-top: 124px;
+	}
+
+	#part-1, #part-2, #part-3, #about-us{
+		padding-top: 123px;
+	    margin-top: -123px;
+	}
+}
