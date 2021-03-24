@@ -5,27 +5,27 @@ function getCurrentDate() {
 	return date + time;
 }
 
+console.log = console.log.bind(console, getCurrentDate());
+console.info = console.info.bind(console, getCurrentDate());
+console.warn = console.warn.bind(console, getCurrentDate());
+console.error = console.error.bind(console, getCurrentDate());
+
 let Logger = {
 
-	logOld: console.log,
-	errOld: console.error,
-	warnOld: console.warn,
-	infoOld: console.info,
-
 	log: function(text) {
-		this.logOld.call(console, getCurrentDate() + text);
+		console.log(text);
 		document.querySelector('.modal-window__information').innerHTML = text;
 	},
 	info: function(text) {
-		this.infoOld.call(console, getCurrentDate() + text);
+		console.info(text);
 		document.querySelector('.modal-window__information').innerHTML = text;
 	},
 	warn: function(text) {
-		this.warnOld.call(console, getCurrentDate() + text);
+		console.warn(text);
 		document.querySelector('.modal-window__information').innerHTML = text;
 	},
 	error: function(text) {
-		this.errOld.call(console, getCurrentDate() + text);
+		console.error(text);
 		document.querySelector('.modal-window__information').innerHTML = text;
 	},
 	
