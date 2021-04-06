@@ -3,4 +3,5 @@
 * Second task: https://netcracker-second-task.netlify.app/;
 * Third task: https://netcracker-third-task.netlify.app/;
 * Fourth task: https://netcracker-fourth-task.netlify.app/;
-* Fifth task: https://netcrakcer-fifth-task.netlify.app/.
+* Fifth task: https://netcrakcer-fifth-task.netlify.app/;
+* Sith task: https://netcracker-sixth-task.netlify.app/.
