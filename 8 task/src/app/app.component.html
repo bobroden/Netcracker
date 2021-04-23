@@ -1,0 +1,62 @@
+<section class="change-window">
+	<label for="show">Show students with score < 3: </label>
+	<input type="checkbox" name="show" id="show" (click)="Show()">
+	<hr>
+	<label for="surname">Search by last name: </label>
+	<input type="text" name="surname" (input)="ChangeStr($event)" id="surname" placeholder="Surname">
+	<hr>
+	<h2>Filter</h2>
+	<div class="filter">
+		<label>Filter by average score: </label>
+		<select (change)="ChangeFilterScore($event)">
+			<option value=">">></option>
+			<option value="<"><</option>
+			<option value="=">=</option>
+		</select>
+		<input type="number" name="score" (input)="ChangeScoreInput($event)" placeholder="Average score">
+	</div>
+	<div class="filter">
+		<label>Filter by date of birth: </label>
+		<select (change)="ChangeFilterDate($event)">
+			<option value=">">></option>
+			<option value="<"><</option>
+			<option value="=">=</option>
+		</select>
+		<input type="date" name="date" (input)="ChangeDateInput($event)">
+	</div>
+	<button id="filter" (click)="Filter()">Filter</button>
+</section>
+<section class="table-window">
+	<table>
+		<thead>
+			<tr>
+			    <th>№</th>
+			    <th (click)="SortName()">Name</th>
+			    <th (click)="SortSurname()">Surname</th>
+			    <th (click)="SortPatronymic()">Patronymic</th>
+			    <th (click)="SortDate()">Date of birth</th>
+			    <th (click)="SortScore()">Average score</th>
+			    <th>Delete</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr *ngFor="let item of studentsList; let index = index">
+				<td [class.red]="isRed(item.Average_score)" [class.blue]="Search(item.Surname)">{{index + 1}}</td>
+				<td [class.red]="isRed(item.Average_score)" [class.blue]="Search(item.Surname)">{{item.Name}}</td>
+				<td [class.red]="isRed(item.Average_score)" [class.blue]="Search(item.Surname)">{{item.Surname}}</td>
+				<td [class.red]="isRed(item.Average_score)" [class.blue]="Search(item.Surname)">{{item.Patronymic}}</td>
+				<td [class.red]="isRed(item.Average_score)" [class.blue]="Search(item.Surname)">{{item.Date_of_birth | date: 'dd.MM.yyyy'}}</td>
+				<td [class.red]="isRed(item.Average_score)" [class.blue]="Search(item.Surname)">{{item.Average_score}}</td>
+				<td [class.red]="isRed(item.Average_score)" [class.blue]="Search(item.Surname)"><img (click)="Delete(index)" alt="close" src="close.svg"></td>
+			</tr>
+		</tbody>
+	</table>
+</section>
+<div class="hidden modal-window" [class.hidden]="!modalwindow">
+	<div class="modal-container">
+		<label>Are you sure?</label>
+		<br>
+		<button class="yes" (click)="DeleteRow(true)">Yes</button>
+		<button class="no" (click)="DeleteRow(false)">No</button>
+	</div>
+</div>
