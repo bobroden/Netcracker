@@ -24,9 +24,10 @@ input {
 	border-radius: 5px;
 	padding: 5px;
 	text-align: center;
-	margin: 0 10px;
+	margin: 5px 10px;
 	font-size: 16px;
 	outline: none;
+
 }
 
 select {
@@ -50,7 +51,7 @@ h2 {
 	margin-top: 0;
 }
 
-#filter {
+#filter, #reset {
 	padding: 5px 20px;
 	font-size: 20px;
 	border: 0;
@@ -63,6 +64,10 @@ h2 {
 	&:hover {
 		background: #11999E;
 	}
+}
+
+#reset{
+	margin-left: 30px;
 }
 
 .red, td:first-child.red {

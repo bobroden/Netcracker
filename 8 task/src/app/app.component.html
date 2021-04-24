@@ -1,53 +1,54 @@
 <section class="change-window">
 	<label for="show">Show students with score < 3: </label>
-	<input type="checkbox" name="show" id="show" (click)="Show()">
+	<input type="checkbox" name="show" id="show" (click)="show()">
 	<hr>
 	<label for="surname">Search by last name: </label>
-	<input type="text" name="surname" (input)="ChangeStr($event)" id="surname" placeholder="Surname">
+	<input type="text" name="surname" (input)="changeStr($event)" id="surname" placeholder="Surname">
 	<hr>
 	<h2>Filter</h2>
 	<div class="filter">
 		<label>Filter by average score: </label>
-		<select (change)="ChangeFilterScore($event)">
+		<select (change)="changeFilterScore($event)">
 			<option value=">">></option>
 			<option value="<"><</option>
 			<option value="=">=</option>
 		</select>
-		<input type="number" name="score" (input)="ChangeScoreInput($event)" placeholder="Average score">
+		<input type="number" name="score" (input)="changeScoreInput($event)" placeholder="Average score">
 	</div>
 	<div class="filter">
 		<label>Filter by date of birth: </label>
-		<select (change)="ChangeFilterDate($event)">
+		<select (change)="changeFilterDate($event)">
 			<option value=">">></option>
 			<option value="<"><</option>
 			<option value="=">=</option>
 		</select>
-		<input type="date" name="date" (input)="ChangeDateInput($event)">
+		<input type="date" name="date" (input)="changeDateInput($event)">
 	</div>
-	<button id="filter" (click)="Filter()">Filter</button>
+	<button id="filter" (click)="filter()">Filter</button>
+	<button id="reset" (click)="reset()">Reset</button>
 </section>
 <section class="table-window">
 	<table>
 		<thead>
 			<tr>
 			    <th>№</th>
-			    <th (click)="SortName()">Name</th>
-			    <th (click)="SortSurname()">Surname</th>
-			    <th (click)="SortPatronymic()">Patronymic</th>
-			    <th (click)="SortDate()">Date of birth</th>
-			    <th (click)="SortScore()">Average score</th>
+			    <th (click)="sortName()">Name</th>
+			    <th (click)="sortSurname()">Surname</th>
+			    <th (click)="sortPatronymic()">Patronymic</th>
+			    <th (click)="sortDate()">Date of birth</th>
+			    <th (click)="sortScore()">Average score</th>
 			    <th>Delete</th>
 			</tr>
 		</thead>
 		<tbody>
 			<tr *ngFor="let item of studentsList; let index = index">
-				<td [class.red]="isRed(item.Average_score)" [class.blue]="Search(item.Surname)">{{index + 1}}</td>
-				<td [class.red]="isRed(item.Average_score)" [class.blue]="Search(item.Surname)">{{item.Name}}</td>
-				<td [class.red]="isRed(item.Average_score)" [class.blue]="Search(item.Surname)">{{item.Surname}}</td>
-				<td [class.red]="isRed(item.Average_score)" [class.blue]="Search(item.Surname)">{{item.Patronymic}}</td>
-				<td [class.red]="isRed(item.Average_score)" [class.blue]="Search(item.Surname)">{{item.Date_of_birth | date: 'dd.MM.yyyy'}}</td>
-				<td [class.red]="isRed(item.Average_score)" [class.blue]="Search(item.Surname)">{{item.Average_score}}</td>
-				<td [class.red]="isRed(item.Average_score)" [class.blue]="Search(item.Surname)"><img (click)="Delete(index)" alt="close" src="close.svg"></td>
+				<td [class.red]="isRed(item.Average_score)" [class.blue]="search(item.Surname)">{{index + 1}}</td>
+				<td [class.red]="isRed(item.Average_score)" [class.blue]="search(item.Surname)">{{item.Name}}</td>
+				<td [class.red]="isRed(item.Average_score)" [class.blue]="search(item.Surname)">{{item.Surname}}</td>
+				<td [class.red]="isRed(item.Average_score)" [class.blue]="search(item.Surname)">{{item.Patronymic}}</td>
+				<td [class.red]="isRed(item.Average_score)" [class.blue]="search(item.Surname)">{{item.Date_of_birth | date: 'dd.MM.yyyy'}}</td>
+				<td [class.red]="isRed(item.Average_score)" [class.blue]="search(item.Surname)">{{item.Average_score}}</td>
+				<td [class.red]="isRed(item.Average_score)" [class.blue]="search(item.Surname)"><img (click)="delete(index)" alt="close" src="close.svg"></td>
 			</tr>
 		</tbody>
 	</table>
@@ -56,7 +57,7 @@
 	<div class="modal-container">
 		<label>Are you sure?</label>
 		<br>
-		<button class="yes" (click)="DeleteRow(true)">Yes</button>
-		<button class="no" (click)="DeleteRow(false)">No</button>
+		<button class="yes" (click)="deleteRow(true)">Yes</button>
+		<button class="no" (click)="deleteRow(false)">No</button>
 	</div>
 </div>
