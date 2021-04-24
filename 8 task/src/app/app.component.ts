@@ -60,17 +60,15 @@ export class AppComponent {
 	}
 
 	filter(): void {
-		if(this.studentsList3) {
+		if (this.studentsList3) {
 			this.studentsList = this.studentsList3;
 		}
 		if (this.scoreInput && this.filterScore) {
 			if (this.filterScore === "=") {
 				this.studentsList2 = this.studentsList.filter(student => +student.Average_score === this.scoreInput);
-			}
-			else if (this.filterScore === ">") {
+			} else if (this.filterScore === ">") {
 				this.studentsList2 = this.studentsList.filter(student => +student.Average_score > this.scoreInput);
-			}
-			else if (this.filterScore === "<") {
+			} else if (this.filterScore === "<") {
 				this.studentsList2 = this.studentsList.filter(student => +student.Average_score < this.scoreInput);
 			}
 			this.studentsList = this.studentsList2;
@@ -78,11 +76,9 @@ export class AppComponent {
 		if (this.dateInput && this.filterDate) {
 			if (this.filterDate === "=") {
 				this.studentsList2 = this.studentsList.filter(student => new Date(student.Date_of_birth).getTime() === this.dateInput.getTime());
-			}
-			else if (this.filterDate === ">") {
+			} else if (this.filterDate === ">") {
 				this.studentsList2 = this.studentsList.filter(student => new Date(student.Date_of_birth).getTime() > this.dateInput.getTime());
-			}
-			else if (this.filterDate === "<") {
+			} else if (this.filterDate === "<") {
 				this.studentsList2 = this.studentsList.filter(student => new Date(student.Date_of_birth).getTime() < this.dateInput.getTime());
 			}
 			this.studentsList = this.studentsList2;
@@ -90,7 +86,7 @@ export class AppComponent {
 	}
 
 	reset(): void {
-		if(this.studentsList3) {
+		if (this.studentsList3) {
 			this.studentsList = this.studentsList3;
 		}
 	}
@@ -120,7 +116,7 @@ export class AppComponent {
 
 	deleteRow(isDelete: Boolean): void {
 	if (isDelete === true) {
-		this.studentsList3 = this.studentsList3.filter(student => student.Date_of_birth != this.studentsList[+this.id].Date_of_birth);
+		this.studentsList3 = this.studentsList3.filter(student => student.Date_of_birth !== this.studentsList[+this.id].Date_of_birth);
 		this.studentsList.splice(+this.id, 1);
 	}
 		this.modalwindow = false;
