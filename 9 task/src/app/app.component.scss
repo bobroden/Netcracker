@@ -1,0 +1,167 @@
+.change-window, .table-window {
+	background: #40514E;
+	margin: 20px auto;
+	border-radius: 10px;
+	padding: 30px;
+	text-align: center;
+	margin-top: 10px;
+	max-width: 940px;
+	color: white;
+}
+
+.table-window {
+	overflow-x:auto;
+}
+
+.filter {
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+input {
+	background: #DEFCF9;
+	border: 0;
+	border-radius: 5px;
+	padding: 5px;
+	text-align: center;
+	margin: 5px 10px;
+	font-size: 16px;
+	outline: none;
+}
+
+select {
+	background: #DEFCF9;
+	border: 0;
+	border-radius: 5px;
+	padding: 5px;
+	text-align: center;
+	margin-left: 10px;
+	cursor: pointer;
+	outline: none;
+}
+
+label {
+	font-size: 16px;
+	cursor: pointer;
+}
+
+h2 {
+	font-size: 30px;
+	margin-top: 0;
+}
+
+#filter, #reset {
+	padding: 5px 20px;
+	font-size: 20px;
+	border: 0;
+	border-radius: 10px;
+	cursor: pointer;
+	background: #30E3CA;
+	outline: none;
+	transition: .15s;
+	margin-top: 5px;
+
+	&:hover {
+		background: #11999E;
+	}
+}
+
+#reset {
+	margin-left: 30px;
+}
+
+.red, td:first-child.red {
+	background: #F6416C;
+}
+
+.blue, td:first-child.blue {
+	background: #3D84A8;
+}
+
+.hidden {
+	display: none;
+}
+
+table {
+	margin: 0 auto;
+	font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+	font-size: 14px;
+	border-collapse: collapse;
+	text-align: center;
+}
+th {
+	cursor: pointer;
+}
+th, td:first-child {
+	background: #AFCDE7;
+	color: white;
+	padding: 10px 20px;
+}
+th, td {
+	border-style: solid;
+	border-width: 0 1px 1px 0;
+	border-color: white;
+}
+td {
+	background: #D8E6F3;
+	color: black;
+}
+th:first-child, td:first-child {
+	text-align: left;
+}
+
+td img {
+	height: 30px;
+	width: 30px;
+	cursor: pointer;
+}
+
+.modal-window {
+	position: fixed;
+	height: 100%;
+	width: 100%;
+	background: #0008;
+	top: 0;
+	left: 0;
+}
+
+.modal-container {
+	margin: 400px auto;
+	text-align: center;
+	background: white;
+	border: 0;
+	border-radius: 5px;
+	padding: 50px;
+	width: 300px;
+
+	label {
+		font-size: 20px;
+	}
+
+	.yes, .no {
+		border: 0;
+		border-radius: 10px;
+		padding: 10px;
+		font-size: 20px;
+		margin-top: 10px;
+		cursor: pointer;
+		transition: .15s
+	}
+
+	.yes {
+		background: #F6416C;
+		margin-right: 30px;
+
+		&:hover {
+			border-radius: 20px;
+		}
+	}
+
+	.no {
+		background: #7FFF8D;
+
+		&:hover {
+			border-radius: 20px;
+		}
+	}
+}
