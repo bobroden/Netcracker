@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from "@angular/core";
-import { FormControl, FormGroup, Validators } from "@angular/forms";
+import { FormControl, FormGroup, NgForm, Validators } from "@angular/forms";
 
 import { AppComponent , Student } from "../app.component";
 
@@ -17,10 +17,12 @@ export class StudentFormComponent implements OnInit {
 	@Input() isFiltered: Boolean;
 
 	filter: Boolean;
+	change_mode: Boolean = false;
 
 	student: Student;
 
-	hidden: Boolean;
+	add_hidden = true;
+	change_hidden = true;
 
 	name: String;
 	surname: String;
@@ -33,7 +35,6 @@ export class StudentFormComponent implements OnInit {
 	changePatronymic: String;
 	changeDate: Date;
 	changeScore: Number;
-	changeNumber = 100;
 	years: Boolean;
 
 	checkedFullname: String;
@@ -44,20 +45,21 @@ export class StudentFormComponent implements OnInit {
 	scoreControl: FormControl;
 	fullNameControl: FormGroup;
 
-	changeNumberControl: FormControl;
 	changeDateControl: FormControl;
 	changeScoreControl: FormControl;
 	changeFullNameControl: FormGroup;
 
-	changeCheckedNumber: String;
 	changeCheckedFullname: String;
 	changeCheckedDate: String;
 	changeCheckedScope: String;
 
 	add_value: String = "The button is waiting!";
 	change_value: String = "The button is waiting!";
-	add_succes: Boolean = false;
-	change_succes: Boolean = false;
+	change_index;
+
+	changeMode(): void {
+		this.change_mode = !this.change_mode;
+	}
 
 	ngOnInit(): void {
 		this.dateControl = new FormControl("", [Validators.required, this.DateValidator.bind(this)]);
@@ -69,9 +71,9 @@ export class StudentFormComponent implements OnInit {
 			patronymicControl: new FormControl("", [Validators.required])
 		}, this.nameValidator.bind(this));
 
-		this.fullNameControl.controls["nameControl"].valueChanges.subscribe((value) => this.name = value.trim());
-		this.fullNameControl.controls["surnameControl"].valueChanges.subscribe((value) => this.surname = value.trim());
-		this.fullNameControl.controls["patronymicControl"].valueChanges.subscribe((value) => this.patronymic = value.trim());
+		this.fullNameControl.controls["nameControl"].valueChanges.subscribe((value) => this.name = value);
+		this.fullNameControl.controls["surnameControl"].valueChanges.subscribe((value) => this.surname = value);
+		this.fullNameControl.controls["patronymicControl"].valueChanges.subscribe((value) => this.patronymic = value);
 		this.dateControl.valueChanges.subscribe((value) => {
 			this.date = new Date(value);
 			this.date.setHours(0);
@@ -84,7 +86,6 @@ export class StudentFormComponent implements OnInit {
 
 
 
-		this.changeNumberControl = new FormControl("", [Validators.required, Validators.max(this.studentsList3.length), Validators.min(1)]);
 		this.changeDateControl = new FormControl("", [Validators.required, this.DateValidator.bind(this)]);
 		this.changeScoreControl = new FormControl("", [Validators.required, Validators.min(0)]);
 
@@ -94,17 +95,15 @@ export class StudentFormComponent implements OnInit {
 			changePatronymicControl: new FormControl("", [Validators.required])
 		}, this.changeNameValidator.bind(this));
 
-		this.changeNumberControl.valueChanges.subscribe((value) => this.changeNumber = +value);
-		this.changeFullNameControl.controls["changeNameControl"].valueChanges.subscribe((value) => this.changeName = value.trim());
-		this.changeFullNameControl.controls["changeSurnameControl"].valueChanges.subscribe((value) => this.changeSurname = value.trim());
-		this.changeFullNameControl.controls["changePatronymicControl"].valueChanges.subscribe((value) => this.changePatronymic = value.trim());
+		this.changeFullNameControl.controls["changeNameControl"].valueChanges.subscribe((value) => this.changeName = value);
+		this.changeFullNameControl.controls["changeSurnameControl"].valueChanges.subscribe((value) => this.changeSurname = value);
+		this.changeFullNameControl.controls["changePatronymicControl"].valueChanges.subscribe((value) => this.changePatronymic = value);
 		this.changeDateControl.valueChanges.subscribe((value) => {
 			this.changeDate = new Date(value);
 			this.changeDate.setHours(0);
 		});
 		this.changeScoreControl.valueChanges.subscribe((value) => this.changeScore = +value);
 
-		this.changeNumberControl.statusChanges.subscribe((value) => this.changeCheckedNumber = value);
 		this.changeFullNameControl.statusChanges.subscribe((value) => {this.changeCheckedFullname = value; });
 		this.changeDateControl.statusChanges.subscribe((value) => {this.changeCheckedDate = value; });
 		this.changeScoreControl.statusChanges.subscribe((value) => {this.changeCheckedScope = value; });
@@ -146,57 +145,68 @@ export class StudentFormComponent implements OnInit {
 			this.student = {Name: this.name, Surname: this.surname, Patronymic: this.patronymic, Date_of_birth: this.date, Average_score: this.score};
 			this.studentsList.push(this.student);
 			this.studentsList3.push(this.student);
-			this.add_value = "Successfully added!";
-			this.add_succes = true;
+			this.add_value = "The button is waiting!";
+			this.fullNameControl.reset();
+			this.dateControl.reset();
+			this.scoreControl.reset();
+			this.add_hidden = true;
 			if (this.isFiltered) {
 				this.parent.filter();
 			} else {
 				this.studentsList.pop();
 			}
 		} else {
-			this.add_succes = false;
-			this.hidden = false;
 			this.add_value = "";
 			if (this.checkedFullname !== "VALID") {
-				this.add_value += "The first name is the same as the last name or patronymic! ";
+				this.add_value += "The first name is the same as the last name or patronymic!\n";
 			}
 			if (this.checkedDate !== "VALID") {
-				this.add_value += "The person is less than 10 years old! ";
+				this.add_value += "The person is less than 10 years old!\n";
 			}
 			if (this.checkedScope !== "VALID") {
-				this.add_value += "The average score is either omitted or negative! ";
+				this.add_value += "The average score is either omitted or negative!\n";
 			}
 
 		}
 	}
 
 	change(): void {
-		if (this.changeCheckedFullname === "VALID" && this.changeCheckedDate === "VALID" && this.changeCheckedScope === "VALID" && this.changeCheckedNumber === "VALID") {
+		if (this.changeCheckedFullname === "VALID" && this.changeCheckedDate === "VALID" && this.changeCheckedScope === "VALID") {
 			this.student = {Name: this.changeName, Surname: this.changeSurname, Patronymic: this.changePatronymic, Date_of_birth: this.changeDate, Average_score: this.changeScore};
-			const i = this.studentsList3.indexOf(this.studentsList[this.changeNumber - 1]);
+			const i = this.studentsList3.indexOf(this.studentsList[this.change_index]);
 			this.studentsList3.splice(i, 1, this.student);
-			this.studentsList.splice(this.changeNumber - 1, 1, this.student);
-			this.change_value = "Successfully changed!";
-			this.change_succes = true;
+			this.studentsList.splice(this.change_index, 1, this.student);
+			this.change_value = "The button is waiting!";
+			this.changeFullNameControl.controls["changeNameControl"].reset();
+			this.changeFullNameControl.controls["changeSurnameControl"].reset();
+			this.changeFullNameControl.controls["changePatronymicControl"].reset();
+			this.changeDateControl.reset();
+			this.changeScoreControl.reset();
+			this.change_hidden = true;
 			if (this.isFiltered) {
 				this.parent.filter();
 			}
 		} else {
-			this.change_succes = false;
-			this.hidden = false;
 			this.change_value = "";
-			if (this.changeCheckedNumber !== "VALID") {
-				this.change_value += "There is no such number that you want to replace! ";
-			}
 			if (this.changeCheckedFullname !== "VALID") {
-				this.change_value += "The first name is the same as the last name or patronymic";
+				this.change_value += "The first name is the same as the last name or patronymic!\n";
 			}
 			if (this.changeCheckedDate !== "VALID") {
-				this.change_value += "The person is less than 10 years old! ";
+				this.change_value += "The person is less than 10 years old!\n";
 			}
 			if (this.changeCheckedScope !== "VALID") {
-				this.change_value += "The average score is either omitted or negative! ";
+				this.change_value += "The average score is either omitted or negative!\n";
 			}
+		}
+	}
+
+	changeStudent(e: Event, index: number): void {
+		if ((<HTMLElement>e.target).tagName === "TD" && this.change_mode) {
+			this.change_hidden = false;
+			this.change_index = index;
+			this.changeFullNameControl.controls["changeNameControl"].setValue(this.studentsList[index].Name);
+			this.changeFullNameControl.controls["changeSurnameControl"].setValue(this.studentsList[index].Surname);
+			this.changeFullNameControl.controls["changePatronymicControl"].setValue(this.studentsList[index].Patronymic);
 		}
 	}
 

@@ -1,9 +1,9 @@
 {
   "rulesDirectory": [
-    //"node_modules/codelyzer"
+    "node_modules/codelyzer"
   ],
   "extends": [
-    //"codelyzer"
+    "codelyzer"
   ],
   "rules": {
     "no-host-metadata-property": true,

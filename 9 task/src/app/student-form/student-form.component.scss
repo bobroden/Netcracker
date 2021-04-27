@@ -21,6 +21,8 @@ p.valid {
 	border-radius: 5px;
 	padding: 10px;
 	transition: .15s;
+	font-size: 16px;
+	overflow: auto;
 }
 
 .form-element-container {
@@ -36,14 +38,16 @@ fieldset {
 	padding-top: 20px;
 }
 
-.add-form-container, .change-form-container {
-	background: #40514E;
+
+
+.redax-container {
 	margin: 20px auto;
 	border-radius: 10px;
 	padding: 30px;
 	text-align: center;
 	margin-top: 10px;
 	max-width: 940px;
+	background: #40514E;
 	color: white;
 }
 
@@ -64,11 +68,18 @@ input[type=submit] {
 	width: 150px;
 }
 
+#change-mode {
+	width: 20px;
+	margin-top: 20px;
+	margin-bottom: 0;
+	cursor: pointer;
+}
+
 label {
 	margin-top: 5px;
 }
 
-#add, #change {
+#add, #change, .add-button {
 	padding: 5px 20px;
 	font-size: 20px;
 	border: 0;
@@ -98,13 +109,14 @@ label {
 }
 
 .modal-container {
-	margin: 400px auto;
+	margin: 200px auto;
 	text-align: center;
 	background: white;
 	border: 0;
 	border-radius: 5px;
 	padding: 50px;
-	width: 300px;
+	max-width: 500px;
+	position: relative;
 
 	label {
 		font-size: 20px;
@@ -125,4 +137,13 @@ label {
 			border-radius: 20px;
 		}
 	}
+}
+
+.close {
+	height: 30px;
+    width: 30px;
+    cursor: pointer;
+    position: absolute;
+    top: 10px;
+    right: 10px;
 }
