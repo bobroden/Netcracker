@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { FormControl, FormGroup, NgForm, Validators } from "@angular/forms";
-
-import { AppComponent , Student } from "../app.component";
+import { AppComponent } from "../app.component";
+import { Student, StudentsService } from "../shared/students.service";
 
 
 @Component({
@@ -10,14 +10,12 @@ import { AppComponent , Student } from "../app.component";
 	styleUrls: ["./student-form.component.scss"]
 })
 export class StudentFormComponent implements OnInit {
-	constructor(private parent: AppComponent) {}
+	constructor(private studentsService: StudentsService) {}
 
-	@Input() studentsList: Student[];
-	@Input() studentsList3: Student[];
-	@Input() isFiltered: Boolean;
+	// studentsList = this.studentsService.studentsList;
+	// originalStudentsList = this.studentsService.originalStudentsList;
 
 	filter: Boolean;
-	change_mode: Boolean = false;
 
 	student: Student;
 
@@ -57,11 +55,8 @@ export class StudentFormComponent implements OnInit {
 	change_value: String = "The button is waiting!";
 	change_index;
 
-	changeMode(): void {
-		this.change_mode = !this.change_mode;
-	}
-
 	ngOnInit(): void {
+
 		this.dateControl = new FormControl("", [Validators.required, this.DateValidator.bind(this)]);
 		this.scoreControl = new FormControl("", [Validators.required, Validators.min(0)]);
 
@@ -143,17 +138,17 @@ export class StudentFormComponent implements OnInit {
 	add(): void {
 		if (this.checkedFullname === "VALID" && this.checkedDate === "VALID" && this.checkedScope === "VALID") {
 			this.student = {Name: this.name, Surname: this.surname, Patronymic: this.patronymic, Date_of_birth: this.date, Average_score: this.score};
-			this.studentsList.push(this.student);
-			this.studentsList3.push(this.student);
+			this.studentsService.studentsList.push(this.student);
+			this.studentsService.originalStudentsList.push(this.student);
 			this.add_value = "The button is waiting!";
 			this.fullNameControl.reset();
 			this.dateControl.reset();
 			this.scoreControl.reset();
 			this.add_hidden = true;
-			if (this.isFiltered) {
-				this.parent.filter();
+			if (this.studentsService.isFiltered) {
+				this.studentsService.filter();
 			} else {
-				this.studentsList.pop();
+				this.studentsService.studentsList.pop();
 			}
 		} else {
 			this.add_value = "";
@@ -173,9 +168,9 @@ export class StudentFormComponent implements OnInit {
 	change(): void {
 		if (this.changeCheckedFullname === "VALID" && this.changeCheckedDate === "VALID" && this.changeCheckedScope === "VALID") {
 			this.student = {Name: this.changeName, Surname: this.changeSurname, Patronymic: this.changePatronymic, Date_of_birth: this.changeDate, Average_score: this.changeScore};
-			const i = this.studentsList3.indexOf(this.studentsList[this.change_index]);
-			this.studentsList3.splice(i, 1, this.student);
-			this.studentsList.splice(this.change_index, 1, this.student);
+			const i = this.studentsService.originalStudentsList.indexOf(this.studentsService.studentsList[this.change_index]);
+			this.studentsService.originalStudentsList.splice(i, 1, this.student);
+			this.studentsService.studentsList.splice(this.change_index, 1, this.student);
 			this.change_value = "The button is waiting!";
 			this.changeFullNameControl.controls["changeNameControl"].reset();
 			this.changeFullNameControl.controls["changeSurnameControl"].reset();
@@ -183,8 +178,8 @@ export class StudentFormComponent implements OnInit {
 			this.changeDateControl.reset();
 			this.changeScoreControl.reset();
 			this.change_hidden = true;
-			if (this.isFiltered) {
-				this.parent.filter();
+			if (this.studentsService.isFiltered) {
+				this.studentsService.filter();
 			}
 		} else {
 			this.change_value = "";
@@ -201,12 +196,12 @@ export class StudentFormComponent implements OnInit {
 	}
 
 	changeStudent(e: Event, index: number): void {
-		if ((<HTMLElement>e.target).tagName === "TD" && this.change_mode) {
+		if ((<HTMLElement>e.target).tagName === "TD") {
 			this.change_hidden = false;
 			this.change_index = index;
-			this.changeFullNameControl.controls["changeNameControl"].setValue(this.studentsList[index].Name);
-			this.changeFullNameControl.controls["changeSurnameControl"].setValue(this.studentsList[index].Surname);
-			this.changeFullNameControl.controls["changePatronymicControl"].setValue(this.studentsList[index].Patronymic);
+			this.changeFullNameControl.controls["changeNameControl"].setValue(this.studentsService.studentsList[index].Name);
+			this.changeFullNameControl.controls["changeSurnameControl"].setValue(this.studentsService.studentsList[index].Surname);
+			this.changeFullNameControl.controls["changePatronymicControl"].setValue(this.studentsService.studentsList[index].Patronymic);
 		}
 	}
 

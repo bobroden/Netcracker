@@ -1,9 +1,5 @@
 <section class="redax-container">
 	<button class="add-button" (click)="add_hidden=false">Add student</button>
-	<br>
-	<label for="change-mode">Table change mode: </label>
-	<input type="checkbox" name="change-mode" id="change-mode" (click)="changeMode()">
-	<p>To change a student in edit mode, click on the student in the table.</p>
 </section>
 <section class="add-form-container hidden modal-window" [class.hidden]="add_hidden">
 	<div class="modal-container">
