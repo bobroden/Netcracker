@@ -7,4 +7,5 @@
 * Sixth task: https://netcracker-sixth-task.netlify.app/;
 * Seventh task: https://netcracker-seventh-task.netlify.app/;
 * Eighth task: https://netcracker-eighth-task.netlify.app/;
-* Ninth task: https://netcracker-ninth-task.netlify.app/.
+* Ninth task: https://netcracker-ninth-task.netlify.app/;
+* Tenth task: https://netcracker-tenth-task.netlify.app/.
