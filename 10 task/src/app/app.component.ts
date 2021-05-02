@@ -1,19 +1,24 @@
-import { Component, ViewChild } from "@angular/core";
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ViewChild } from "@angular/core";
+import { StudentFormComponent } from "./modules/forms/student-form/student-form.component";
 import { StudentsService } from "./shared/students.service";
-import { StudentFormComponent } from "./student-form/student-form.component";
 
 @Component({
 	selector: "app-root",
 	templateUrl: "./app.component.html",
-	styleUrls: ["./app.component.scss"]
+	styleUrls: ["./app.component.scss"],
+	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 
 export class AppComponent {
 
-	constructor(public studentsService: StudentsService) {}
+	constructor(public studentsService: StudentsService, private cd: ChangeDetectorRef) {}
 
 	@ViewChild(StudentFormComponent)
 	child: StudentFormComponent;
+
+	nameAddedStudent: String = "Not yet";
+	nameChangedStudent: String = "Not yet";
+	nameChangeStudent: String = "Not yet";
 
 	isred = false;
 	searched = "";
@@ -38,7 +43,6 @@ export class AppComponent {
 	show(): void {
 		this.isred = !this.isred;
 	}
-
 
 	changeScoreInput(e: Event): void {
 		this.studentsService.scoreInput = +(<HTMLInputElement>e.target).value;
@@ -88,10 +92,10 @@ export class AppComponent {
 	}
 
 	deleteRow(isDelete: Boolean): void {
-	if (isDelete === true) {
-		this.studentsService.originalStudentsList = this.studentsService.originalStudentsList.filter(student => student.Date_of_birth !== this.studentsService.studentsList[+this.id].Date_of_birth);
-		this.studentsService.studentsList.splice(+this.id, 1);
-	}
+		if (isDelete === true) {
+			this.studentsService.originalStudentsList = this.studentsService.originalStudentsList.filter(student => student.Date_of_birth !== this.studentsService.studentsList[+this.id].Date_of_birth);
+			this.studentsService.studentsList.splice(+this.id, 1);
+		}
 		this.modalwindow = false;
 	}
 
@@ -144,4 +148,13 @@ export class AppComponent {
 			this.sortscore = true;
 		}
 	}
+
+	showChangedName(name: String): void {
+		this.nameChangedStudent = name;
+	}
+
+	showAddedName(name: String): void {
+		this.nameAddedStudent = name;
+	}
+
 }
