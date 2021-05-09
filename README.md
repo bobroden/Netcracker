@@ -8,4 +8,5 @@
 * Seventh task: https://netcracker-seventh-task.netlify.app/;
 * Eighth task: https://netcracker-eighth-task.netlify.app/;
 * Ninth task: https://netcracker-ninth-task.netlify.app/;
-* Tenth task: https://netcracker-tenth-task.netlify.app/.
+* Tenth task: https://netcracker-tenth-task.netlify.app/;
+* Eleventh task: https://netcracker-eleventh-task.netlify.app/. But on netlify, routing does not work quite correctly. Need to download the folder and work locally.
