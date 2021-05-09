@@ -1,0 +1,122 @@
+[
+	{
+		"Id": 0,
+		"Surname": "Айнетдинов",
+		"Name": "Антон",
+		"Patronymic": "Рушанович",
+		"Date_of_birth": "05.22.1999",
+		"Average_score": "3.7"
+	},
+	{
+		"Id": 1,
+		"Surname": "Баканов",
+		"Name": "Максим",
+		"Patronymic": "Павлович",
+		"Date_of_birth": "12.15.1999",
+		"Average_score": "3.7"
+	},
+	{
+		"Id": 2,
+		"Surname": "Бобров",
+		"Name": "Денис",
+		"Patronymic": "Васильевич",
+		"Date_of_birth": "09.05.1999",
+		"Average_score": "4.7"
+	},
+	{
+		"Id": 3,
+		"Surname": "Волков",
+		"Name": "Максим",
+		"Patronymic": "Александрович",
+		"Date_of_birth": "07.06.1999",
+		"Average_score": "4.2"
+	},
+	{
+		"Id": 4,
+		"Surname": "Вострилов",
+		"Name": "Алексей",
+		"Patronymic": "Сергеевич",
+		"Date_of_birth": "02.14.1999",
+		"Average_score": "3.2"
+	},
+	{
+		"Id": 5,
+		"Surname": "Ганюшин",
+		"Name": "Илья",
+		"Patronymic": "Алексеевич",
+		"Date_of_birth": "11.07.1999",
+		"Average_score": "2.7"
+	},
+	{
+		"Id": 6,
+		"Surname": "Каленга",
+		"Name": "Даниель",
+		"Patronymic": "Мпойи",
+		"Date_of_birth": "04.04.2000",
+		"Average_score": "3"
+	},
+	{
+		"Id": 7,
+		"Surname": "Куленков",
+		"Name": "Сергей",
+		"Patronymic": "Александрович",
+		"Date_of_birth": "06.21.1999",
+		"Average_score": "4.3"
+	},
+	{
+		"Id": 8,
+		"Surname": "Новичков",
+		"Name": "Юрий",
+		"Patronymic": "Александрович",
+		"Date_of_birth": "03.27.1999",
+		"Average_score": "4.5"
+	},
+	{
+		"Id": 9,
+		"Surname": "Сорокин",
+		"Name": "Андрей",
+		"Patronymic": "Андреевич",
+		"Date_of_birth": "08.07.1999",
+		"Average_score": "3.1"
+	},
+	{
+		"Id": 10,
+		"Surname": "Сорочинский",
+		"Name": "Андрей",
+		"Patronymic": "Сергеевич",
+		"Date_of_birth": "04.05.2000",
+		"Average_score": "2.7"
+	},
+	{
+		"Id": 11,
+		"Surname": "Сысоев",
+		"Name": "Егор",
+		"Patronymic": "Алексеевич",
+		"Date_of_birth": "02.07.1999",
+		"Average_score": "4.3"
+	},
+	{
+		"Id": 12,
+		"Surname": "Чернышов",
+		"Name": "Денис",
+		"Patronymic": "Дмитриевич",
+		"Date_of_birth": "08.19.1999",
+		"Average_score": "3.6"
+	},
+	{
+		"Id": 13,
+		"Surname": "Шайхмагомедов",
+		"Name": "Руслан",
+		"Patronymic": "Ибрагимович",
+		"Date_of_birth": "01.29.1999",
+		"Average_score": "4"
+	},
+	{
+		"Id": 14,
+		"Surname": "Широков",
+		"Name": "Дмитрий",
+		"Patronymic": "Сергеевич",
+		"Date_of_birth": "05.25.1999",
+		"Average_score": "4.6"
+	}
+]

@@ -1,0 +1,149 @@
+input.ng-invalid, fieldset.ng-invalid {
+	border: 1px solid #E32636;
+}
+
+input.ng-valid, fieldset.ng-valid {
+	border: 1px solid #08C449;
+}
+
+p.valid {
+	border: 1px solid #08C449;
+	color: #08C449;
+}
+
+.invalid {
+	border: 1px solid #E32636;
+	color: #FF2400;
+}
+
+.desc-value {
+	display: inline-block;
+	border-radius: 5px;
+	padding: 10px;
+	transition: .15s;
+	font-size: 16px;
+	overflow: auto;
+}
+
+.form-element-container {
+	display: flex;
+	justify-content: space-between;
+	max-width: 320px;
+	margin: 0 auto;
+}
+
+fieldset {
+	margin-bottom: 10px;
+	border-radius: 5px;
+	padding-top: 20px;
+}
+
+
+
+.redax-container {
+	margin: 20px auto;
+	border-radius: 10px;
+	padding: 30px;
+	text-align: center;
+	margin-top: 10px;
+	max-width: 940px;
+	background: #40514E;
+	color: white;
+}
+
+input {
+	background: #DEFCF9;
+	border: 0;
+	border-radius: 5px;
+	padding: 5px;
+	text-align: center;
+	margin: 0 10px;
+	font-size: 16px;
+	outline: none;
+	margin-bottom: 10px;
+	width: 50%;
+}
+
+input[type=submit] {
+	width: 150px;
+}
+
+#change-mode {
+	width: 20px;
+	margin-top: 20px;
+	margin-bottom: 0;
+	cursor: pointer;
+}
+
+label {
+	margin-top: 5px;
+}
+
+#add, #change, .add-button {
+	padding: 5px 20px;
+	font-size: 20px;
+	border: 0;
+	border-radius: 10px;
+	cursor: pointer;
+	background: #30E3CA;
+	outline: none;
+	transition: .15s;
+	margin-top: 10px;
+
+	&:hover {
+		background: #11999E;
+	}
+}
+
+.hidden {
+	display: none;
+}
+
+.modal-window {
+	position: fixed;
+	height: 100%;
+	width: 100%;
+	background: #0008;
+	top: 0;
+	left: 0;
+}
+
+.modal-container {
+	margin: 200px auto;
+	text-align: center;
+	background: white;
+	border: 0;
+	border-radius: 5px;
+	padding: 50px;
+	max-width: 500px;
+	position: relative;
+
+	label {
+		font-size: 20px;
+	}
+
+	.ok {
+		border: 0;
+		border-radius: 10px;
+		padding: 10px;
+		font-size: 20px;
+		margin-top: 10px;
+		cursor: pointer;
+		transition: .15s;
+		background: #7FFF8D;
+		width: 50px;
+
+		&:hover {
+			border-radius: 20px;
+		}
+	}
+}
+
+.close {
+	height: 30px;
+    width: 30px;
+    cursor: pointer;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
