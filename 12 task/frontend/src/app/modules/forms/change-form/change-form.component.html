@@ -1,0 +1,39 @@
+<section class="change-form-container modal-window">
+	<div class="modal-container">
+		<h2>Change student:</h2>
+		<form novalidate class="change-form" (ngSubmit)="change()">
+			<fieldset [formGroup]="changeFullNameControl">
+				<div class="form-element-container">
+					<label>Name: </label>
+					<input type="text" name="name" formControlName="changeNameControl">
+				</div>
+				<div class="form-element-container">
+					<label>Surname: </label>
+					<input type="text" name="surname" formControlName="changeSurnameControl">
+				</div>
+				<div class="form-element-container">
+					<label>Patronymic: </label>
+					<input type="text" name="patronymic" formControlName="changePatronymicControl">
+				</div>
+			</fieldset>
+			<div class="form-element-container">
+				<label>Date of birth: </label>
+				<input type="date" name="date" [formControl]="changeDateControl">
+			</div>
+			<div class="form-element-container">
+				<label>Avenge score: </label>
+				<input type="number" step="0.1" name="score" [formControl]="changeScoreControl" (input)="getTenScore($event); getPercentages($event)">
+			</div>
+			<div class="form-element-container">
+				<label>On a ten scale: {{tenScore | tenScore}}</label>
+			</div>
+			<div class="form-element-container">
+				<label>On percentages: {{percentage | percentages}}</label>
+			</div>
+			<pre class="desc-value invalid">{{change_value}}</pre>
+			<br>
+			<input type="submit" class="change" value="Change" id="change">
+		</form>
+		<img src="close.svg" alt="close" class="close" (click)="returnToMain()">
+	</div>
+</section>
