@@ -10,4 +10,5 @@
 * Ninth task: https://netcracker-ninth-task.netlify.app/;
 * Tenth task: https://netcracker-tenth-task.netlify.app/;
 * Eleventh task: https://netcracker-eleventh-task.netlify.app/; Need a server there!
-* Twelfth task: https://netcracker-twelfth-task.netlify.app/. Need a server there!
+* Twelfth task: https://netcracker-twelfth-task.netlify.app/; Need a server there!
+* Final task: https://netcracker-final-task.netlify.app/.
