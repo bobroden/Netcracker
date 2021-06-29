@@ -1,0 +1,15 @@
+<section class="container">
+	<mat-label class="container__label">Select the global level and the page number: </mat-label>
+	<mat-form-field class="container__select">
+		<mat-select [(value)]="group">
+			<mat-option *ngFor="let item of groups" [value]="item">{{item}}</mat-option>
+		</mat-select>
+	</mat-form-field>
+	<mat-form-field class="container__select">
+		<mat-select [(value)]="page">
+			<mat-option *ngFor="let item of pages" [value]="item">{{item}}</mat-option>
+		</mat-select>
+	</mat-form-field>
+	<br>
+	<button mat-flat-button color="primary" (click)="choose()" class="container__button">Start</button>
+</section>

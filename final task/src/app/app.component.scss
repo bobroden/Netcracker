@@ -1,0 +1,95 @@
+.hidden {
+	display: none;
+}
+
+.header {
+	display: flex;
+	justify-content: space-around;
+	flex-wrap: wrap;
+	padding: 20px;
+	border-bottom: 5px #A6AFC9 solid;
+	margin-bottom: 20px;
+	background: #DBE2EF;
+
+	&__main {
+		font-size: 1.5rem;
+	}
+
+	&__profile {
+		font-size: 2rem;
+	}
+
+	&__sign-in {
+		margin-bottom: 4px;
+	}
+}
+
+.mat-icon {
+	width: 32px;
+}
+
+.spinner-container {
+	position: absolute;
+	z-index: 5;
+	height: calc(100% - 110px);
+	width: 100%;
+	align-items: center;
+	background: white;
+}
+
+.spinner {
+	position: fixed;
+  top: 50vh; left: 50vw;
+  transform: translate(-50%,-50%);
+}
+
+body, html {
+	height: 100%;
+}
+
+.wrapper {
+	min-height: 100%;
+	position: relative;
+}
+
+.container {
+	max-width: 940px;
+	margin: 0 auto;
+}
+
+.content {
+	padding-bottom: 78px;
+}
+
+.footer {
+	position: absolute;
+  left: 0;
+  bottom: 0;
+	display: flex;
+	padding: 20px;
+	justify-content: space-around;
+	width: calc(100% - 40px);
+	background: #2D303A;
+
+	&__logo {
+		cursor: pointer;
+		color: white;
+		text-decoration: none;
+		font-size: 1.6rem;
+		padding-top: 10px;
+	}
+
+	&__github {
+		width: 30px;
+		height: 30px;
+		cursor: pointer;
+		transition: .5s;
+		border-radius: 50%;
+		border: 1px #2D303A solid;
+
+		&:hover {
+			border: 1px white solid;
+			background: white;
+		}
+	}
+}

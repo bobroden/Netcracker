@@ -1,0 +1,23 @@
+<section class="registration">
+	<form class="registration__form" (ngSubmit)="signUp()">
+		<h2>Registration</h2>
+		<mat-form-field appearance="fill">
+			<mat-label>Email: </mat-label>
+			<input [formControl]="emailControl" matInput type="email" name="email" id="email" required>
+			<mat-error *ngIf="emailControl.invalid">{{getErrorEmailMessage()}}</mat-error>
+		</mat-form-field>
+		<mat-form-field appearance="fill">
+			<mat-label for="username">Username: </mat-label>
+			<input [formControl]="usernameControl" matInput type="text" name="username" id="username">
+		</mat-form-field>
+		<mat-form-field appearance="fill">
+			<mat-label for="password">Password: </mat-label>
+			<input [formControl]="passwordControl" matInput [type]="hide ? 'password' : 'text'" name="password" id="password" required autocomplete="on">
+			<button type="button" mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+	      <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+	    </button>
+	    <mat-error *ngIf="passwordControl.invalid">{{getErrorPasswordMessage()}}</mat-error>
+		</mat-form-field>
+		<button mat-flat-button color="primary" type="submit">Sign up</button>
+	</form>
+</section>

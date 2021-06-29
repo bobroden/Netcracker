@@ -1,0 +1,19 @@
+.authorization {
+	&__form {
+		display: flex;
+		text-align: center;
+		flex-direction: column;
+		background: #f0f0f0;
+		margin: 150px auto;
+		padding: 20px;
+		max-width: 300px;
+		border-radius: 5px;
+
+		.buttons-container {
+			display: flex;
+			justify-content: space-around;
+			flex-wrap: wrap;
+			margin-top: 30px;
+		}
+	}
+}

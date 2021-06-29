@@ -1,0 +1,23 @@
+<section *ngIf="serverService.currentWords.length !== 0">
+	<mat-card class="game__card">
+		<div class="quantity-words">
+			<p class="quantity-words__wrights">{{audioTalkService.rightWords}}</p>
+			<p class="quantity-words__wrongs">{{audioTalkService.wrongWords}}</p>
+		</div>
+		<mat-card-header>
+			<mat-card-title>
+				{{serverService.currentWord.word}} {{serverService.currentWord.transcription}} - {{serverService.currentWord.wordTranslate}}
+			</mat-card-title>
+		</mat-card-header>
+		<img class="game__card__image" mat-card-image src="https://raw.githubusercontent.com/bobroden/LearnWords/master/{{serverService.currentWord.image}}" alt="{{serverService.currentWord.word}}">
+		<mat-card-actions class="volume-container">
+			<button mat-flat-button color="warn" (click)="next()">Skip</button>
+			<button mat-icon-button (click)="start()" *ngIf="this.audioTalkService.isStoppedSpeechRecog" class="green">
+				<mat-icon>mic</mat-icon>
+			</button>
+			<button mat-icon-button (click)="stop()" *ngIf="!this.audioTalkService.isStoppedSpeechRecog" class="red">
+				<mat-icon>mic_off</mat-icon>
+			</button>
+		</mat-card-actions>
+	</mat-card>
+</section>

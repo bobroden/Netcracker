@@ -1,0 +1,41 @@
+.game-button-container, .level-container {
+	text-align: center;
+	margin-bottom: 20px;
+
+	p {
+		font-size: 1.6rem;
+	}
+}
+
+.textbook {
+	display: flex;
+	justify-content: space-around;
+	flex-wrap: wrap;
+	max-width: 1200px;
+	margin: 0 auto;
+	min-height: 500px;
+
+	&__card {
+		flex-basis: 320px;
+		margin-bottom: 20px;
+
+		&__image {
+			height: 200px;
+		}
+	}
+}
+
+.volume-container {
+	position: absolute;
+	bottom: 10px;
+	right: 10px;
+}
+
+.button-container {
+	text-align: center;
+	padding: 20px;
+}
+
+.game-button {
+	margin-right: 20px;
+}

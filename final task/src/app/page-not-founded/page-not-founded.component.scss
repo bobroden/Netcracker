@@ -1,0 +1,15 @@
+.error{
+	text-align: center;
+	padding-top: 100px;
+
+	&__message {
+		font-size: 2rem;
+	}
+
+	&__icon {
+		width: 10rem;
+		height: 10rem;
+		font-size: 10rem;
+		color: #EA5353;
+	}
+}

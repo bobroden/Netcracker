@@ -1,0 +1,39 @@
+.menu {
+	display: flex;
+	justify-content: space-around;
+	flex-wrap: wrap;
+	margin: 0 auto;
+	margin-top: 80px;
+	max-width: 1200px;
+
+	&__card {
+		flex-basis: 320px;
+		margin-bottom: 30px;
+		cursor: pointer;
+		background: #E1EFEF;
+
+		img {
+			height: 200px;
+		}
+	}
+}
+
+.disabled {
+	opacity: .5;
+}
+
+.error{
+	text-align: center;
+	padding-top: 25px;
+
+	&__message {
+		font-size: 2rem;
+	}
+
+	&__icon {
+		width: 10rem;
+		height: 10rem;
+		font-size: 10rem;
+		color: #EA5353;
+	}
+}

@@ -1,0 +1,29 @@
+<section class="menu">
+	<mat-card class="menu__card" routerLink='/choose-level'>
+		<mat-card-header>
+			<mat-card-title>Game</mat-card-title>
+		</mat-card-header>
+		<img mat-card-image src="../../assets/game.jpg" alt="Game">
+		<mat-card-content>
+			<p>Let's play! You need to look at the card and correctly pronounce the word written on it. If the pronunciation was correct, then the next word will appear, if it does not work, then there will be an error. If you can't pronounce a word correctly for a long time, you can skip it (this will be considered as an error).</p>
+		</mat-card-content>
+	</mat-card>
+	<mat-card class="menu__card" [ngClass]="{disabled: !serverService.isAuth}" (click)="goTo('/statistics')">
+		<mat-card-header>
+			<mat-card-title>Statistics</mat-card-title>
+		</mat-card-header>
+		<img mat-card-image src="../../assets/statistics.jpg" alt="Statistics">
+		<mat-card-content>
+			<p>Let's see! You can view your statistics for all time.</p>
+		</mat-card-content>
+	</mat-card>
+	<mat-card class="menu__card" [ngClass]="{disabled: !serverService.isAuth}" (click)="goTo('/textbook')">
+		<mat-card-header>
+			<mat-card-title>Textbook</mat-card-title>
+		</mat-card-header>
+		<img mat-card-image src="../../assets/textbook.jpeg" alt="Textbook">
+		<mat-card-content>
+			<p>Let's learn! You can learn words that are divided into 6 difficulty levels. Each level consists of 30 pages of 20 words. After learning the words on the page, you can start the game using these words.</p>
+		</mat-card-content>
+	</mat-card>
+</section>

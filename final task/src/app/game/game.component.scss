@@ -1,0 +1,43 @@
+.game {
+	&__card {
+		max-width: 320px;
+		margin-bottom: 20px;
+		margin: 150px auto;
+		text-align: center;
+
+		&__image {
+			height: 200px;
+		}
+	}
+}
+
+.green {
+	color: green;
+	margin-left: 20px;
+}
+
+.red {
+	color: red;
+	margin-left: 20px;
+}
+
+.quantity-words {
+	display: flex;
+	justify-content: space-around;
+	flex-wrap: wrap;
+	max-width: 320px;
+	font-size: 1.6rem;
+	margin-bottom: 20px;
+
+	p {
+		text-align: center;
+	}
+
+	&__wrights {
+		color: #6BCE2C;
+	}
+
+	&__wrongs {
+		color: #DE4A4A;
+	}
+}

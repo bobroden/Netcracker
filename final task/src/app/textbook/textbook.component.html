@@ -1,0 +1,38 @@
+<div class="game-button-container">
+	<button mat-flat-button color="primary" routerLink="/game" class="game-button">Game</button>
+	<mat-slide-toggle (click)="changeTranslation()">Show translation</mat-slide-toggle>
+</div>
+<div class="level-container">
+	<p>Choose the difficulty level:</p>
+	<button (click)="changeGroup(0)" mat-button color="accent">1</button>
+	<button (click)="changeGroup(1)" mat-button color="accent">2</button>
+	<button (click)="changeGroup(2)" mat-button color="accent">3</button>
+	<button (click)="changeGroup(3)" mat-button color="accent">4</button>
+	<button (click)="changeGroup(4)" mat-button color="accent">5</button>
+	<button (click)="changeGroup(5)" mat-button color="accent">6</button>
+</div>
+<div class="textbook">
+	<mat-card *ngFor="let item of serverService.currentWords; let index = index" class="textbook__card">
+		<mat-card-header>
+			<mat-card-title>
+				{{item.word}} {{item.transcription}} <span *ngIf="showTranslation">- {{item.wordTranslate}}</span>
+			</mat-card-title>
+		</mat-card-header>
+		<img class="textbook__card__image" mat-card-image src="https://raw.githubusercontent.com/bobroden/LearnWords/master/{{item.image}}" alt="{{item.word}}">
+		<mat-card-content>
+			<p>{{removeTags(item.textMeaning)}}</p>
+			<p *ngIf="showTranslation">{{item.textMeaningTranslate}}</p>
+			<p>{{removeTags(item.textExample)}}</p>
+			<p *ngIf="showTranslation">{{item.textExampleTranslate}}</p>
+		</mat-card-content>
+		<mat-card-actions class="volume-container">
+			<button mat-icon-button color="primary" (click)="playSound(index)">
+				<mat-icon>volume_up</mat-icon>
+			</button>
+		</mat-card-actions>
+	</mat-card>
+</div>
+<div class="button-container">
+	<button mat-button (click)="showPrevWords()">Prev</button>
+	<button mat-button (click)="showNextWords()">Next</button>
+</div>

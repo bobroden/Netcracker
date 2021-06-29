@@ -1,0 +1,26 @@
+<main class="wrapper">
+	<header class="header">
+		<h1 class="hidden">Final task</h1>
+		<button routerLink="/main" mat-button color="primary" class="header__main">Main</button>
+		<div class="header__profile">
+			<button mat-icon-button aria-label="Profile" color="primary" routerLink="/profile" *ngIf="serverService.isAuth">
+				<mat-icon class="header__profile">account_circle</mat-icon>
+			</button>
+			<button *ngIf="serverService.isAuth" (click)="signOut()" mat-button color="warn">Sign Out</button>
+			<button class="header__sign-in" *ngIf="!serverService.isAuth" routerLink="/authorization" mat-button color="primary">Sign in</button>
+			<button *ngIf="!serverService.isAuth" routerLink="/registration" mat-button color="accent">Sign up</button>
+		</div>
+	</header>
+	<div class="spinner-container" *ngIf="serverService.load">
+		<mat-spinner class="spinner"></mat-spinner>
+	</div>
+	<section class="content">
+		<router-outlet></router-outlet>
+	</section>
+	<footer class="footer">
+		<a class="footer__logo" href="https://nn.edu-netcracker.com/" target="_blank">Netcracker</a>
+		<a href="https://github.com/bobroden" target="_blank">
+			<img class="footer__github" src="assets/github.svg" alt="Github">
+		</a>
+	</footer>
+</main>
