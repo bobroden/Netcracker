@@ -16,8 +16,8 @@ export class GameComponent implements OnInit, OnDestroy {
 
 	constructor(public audioTalkService: AudiotalkService, public serverService: ServerService, private router: Router, private store$: Store) {
 		if (this.serverService.currentWords.length === 0) {
-			const page = localStorage.getItem("page");
-			const group = localStorage.getItem("group");
+			const page: string = localStorage.getItem("page");
+			const group: string = localStorage.getItem("group");
 			if (page === null || group === null) {
 				this.router.navigateByUrl("/main");
 			}
@@ -25,7 +25,7 @@ export class GameComponent implements OnInit, OnDestroy {
 			this.serverService.group = group;
 			this.store$.dispatch(StoreActions.getNewWords());
 		}
-		this.words$ = this.store$.select(StoreSelectors.currentWords).subscribe(() => this.serverService.shuffle());
+		this.words$ = this.store$.select(StoreSelectors.currentWords).subscribe((): void => this.serverService.shuffle());
 		this.start();
 		this.audioTalkService.rightWords = 0;
 		this.audioTalkService.wrongWords = 0;
@@ -61,7 +61,7 @@ export class GameComponent implements OnInit, OnDestroy {
 		this.audioTalkService.text = "";
 		this.serverService.currentWord = this.serverService.currentWords[this.audioTalkService.index];
 		this.audioTalkService.wrongWords++;
-		const audio = new Audio();
+		const audio: HTMLAudioElement = new Audio();
 		audio.src = "../../assets/error.mp3";
 		audio.play();
 		this.audioTalkService.checkIndex();

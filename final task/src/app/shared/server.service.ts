@@ -7,7 +7,7 @@ import { EMPTY, Observable, Subscription } from "rxjs";
 import { catchError, map, tap } from "rxjs/operators";
 import { DialogSignInWindowComponent } from "../dialog-sign-in-window/dialog-sign-in-window.component";
 import { DialogWindowComponent } from "../dialog-window/dialog-window.component";
-import { Statistics, Word } from "../interfaces";
+import { LoggedObject, Statistics, User, UsernameObject, Word } from "../interfaces";
 import { StoreActions } from "../store/store.actions";
 import { StoreSelectors } from "../store/store.selectors";
 
@@ -19,7 +19,7 @@ export class ServerService {
 	constructor(private router: Router, private dialog: MatDialog, private store$: Store, private http: HttpClient) {
 		this.words$ = this.store$.select(StoreSelectors.currentWords).pipe(
 			tap(() => console.log("Successfully loading the list of current words!")),
-			map(arr => arr.slice().sort((a, b) => {
+			map((arr: Word[]) => arr.slice().sort((a: Word, b: Word) => {
 				if (a.word > b.word) {
 					return 1;
 				}
@@ -27,8 +27,8 @@ export class ServerService {
 					return -1;
 				}
 			})),
-			catchError(err => {
-				console.log("Something's wrong!:(");
+			catchError(() => {
+				alert("Something's wrong!:(");
 				return EMPTY;
 			}),
 		)
@@ -58,8 +58,7 @@ export class ServerService {
 	currentWords: Word[];
 	currentWord: Word;
 
-	defaultStatistics = {
-		id: "",
+	defaultStatistics: Statistics = {
 		learnedWords: 0,
 		optional: {
 			statistics: {
@@ -68,7 +67,7 @@ export class ServerService {
 		},
 	};
 
-	statistics = {
+	statistics: Statistics = {
 		learnedWords: 0,
 		optional: {
 			statistics: {
@@ -82,10 +81,10 @@ export class ServerService {
 		this.currentWord = this.currentWords[0];
 	}
 
-	loginUser = async user => {
+	loginUser = async (user: User): Promise<void> => {
 		try {
 			this.load = true;
-			const rawResponse = await fetch("https://arcane-stream-07325.herokuapp.com/signin", {
+			const rawResponse: Response = await fetch("https://arcane-stream-07325.herokuapp.com/signin", {
 				method: "POST",
 				headers: {
 					"Accept": "application/json",
@@ -93,7 +92,7 @@ export class ServerService {
 				},
 				body: JSON.stringify(user)
 			});
-			const content = await rawResponse.json();
+			const content: LoggedObject = await rawResponse.json();
 
 			this.userId = content.userId;
 			this.token = content.token;
@@ -107,7 +106,6 @@ export class ServerService {
 			localStorage.setItem("email", this.email);
 			localStorage.setItem("username", this.username);
 			localStorage.setItem("password", this.password);
-			console.log(content);
 
 			this.store$.dispatch(StoreActions.statistics());
 
@@ -124,10 +122,10 @@ export class ServerService {
 		}
 	};
 
-	getUsername = async userId => {
+	getUsername = async (userId: string): Promise<void> => {
 		try {
 			this.load = true;
-			const rawResponse = await fetch(`https://arcane-stream-07325.herokuapp.com/users/${this.userId}`, {
+			const rawResponse: Response = await fetch(`https://arcane-stream-07325.herokuapp.com/users/${this.userId}`, {
 				method: "GET",
 				headers: {
 					"Authorization": `Bearer ${this.token}`,
@@ -135,21 +133,20 @@ export class ServerService {
 					"Content-Type": "application/json"
 				},
 			});
-			const content = await rawResponse.json();
+			const content: UsernameObject = await rawResponse.json();
 
 			if (content.name) {
 				this.username = content.name;
 			}
 			localStorage.setItem("username", this.username);
-			console.log(content);
 		} catch {
 			alert("No!");
 			this.load = false;
 		}
 	};
 
-	createUser = async user => {
-		let rawResponse;
+	createUser = async (user: User): Promise<void> => {
+		let rawResponse: Response;
 		try {
 			this.load = true;
 			rawResponse = await fetch("https://arcane-stream-07325.herokuapp.com/users", {
@@ -160,12 +157,12 @@ export class ServerService {
 				},
 				body: JSON.stringify(user)
 			});
-			const content = await rawResponse.json();
-
-			this.userId = content.userId;
-			this.token = content.token;
+			const content: UsernameObject = await rawResponse.json();
 
 			this.email = user.email;
+			if (user.name) {
+				this.username = user.name;
+			}
 			this.password = user.password;
 
 			localStorage.setItem("email", this.email);
@@ -174,7 +171,6 @@ export class ServerService {
 
 			this.router.navigateByUrl("/main");
 			this.loginUser(user);
-			console.log(content);
 		} catch {
 			if (rawResponse.status === 417) {
 				this.dialog.open(DialogWindowComponent);
@@ -185,10 +181,10 @@ export class ServerService {
 		}
 	};
 
-	changeUserInfo = async user => {
+	changeUserInfo = async (user: User): Promise<void> => {
 		try {
 			this.load = true;
-			const rawResponse = await fetch(`https://arcane-stream-07325.herokuapp.com/users/${this.userId}`, {
+			const rawResponse: Response = await fetch(`https://arcane-stream-07325.herokuapp.com/users/${this.userId}`, {
 				method: "PUT",
 				headers: {
 					"Authorization": `Bearer ${this.token}`,
@@ -211,7 +207,6 @@ export class ServerService {
 			localStorage.setItem("password", this.password);
 
 			this.router.navigateByUrl("/main");
-			console.log(content);
 			this.load = false;
 		} catch {
 			alert("No!");
@@ -219,7 +214,7 @@ export class ServerService {
 		}
 	};
 
-	getWords = (page = this.page, group = this.group) => {
+	getWords = (page: string = this.page, group: string = this.group): Observable<Object> => {
 		this.load = true;
 		const httpOptions = {
 			headers: new HttpHeaders ({
@@ -235,7 +230,7 @@ export class ServerService {
 		return this.http.get(`https://arcane-stream-07325.herokuapp.com/words?page=${page}&group=${group}`, httpOptions);
 	};
 
-	getStatistics = () => {
+	getStatistics = (): Observable<Object> => {
 		this.load = true;
 		const httpOptions = {
 			headers: new HttpHeaders ({
@@ -247,7 +242,7 @@ export class ServerService {
 		return this.http.get(`https://arcane-stream-07325.herokuapp.com/users/${this.userId}/statistics`, httpOptions);
 	};
 
-	putStatistics = async (statisc) => {
+	putStatistics = async (statisc: Statistics): Promise<void> => {
 		try {
 			const rawResponse = await fetch(`https://arcane-stream-07325.herokuapp.com/users/${this.userId}/statistics`, {
 				method: "PUT",
@@ -259,8 +254,6 @@ export class ServerService {
 				body: JSON.stringify(statisc),
 			});
 			const content = await rawResponse.json();
-
-			console.log(content);
 		} catch {
 			alert("No!");
 		}

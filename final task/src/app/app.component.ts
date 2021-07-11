@@ -1,6 +1,7 @@
 import { Component, OnDestroy } from "@angular/core";
 import { Router } from "@angular/router";
 import { Store } from "@ngrx/store";
+import { StatisticsDay } from "./interfaces";
 import { ServerService } from "./shared/server.service";
 import { StoreActions } from "./store/store.actions";
 
@@ -10,16 +11,6 @@ import { StoreActions } from "./store/store.actions";
 	styleUrls: ["./app.component.scss"]
 })
 export class AppComponent implements OnDestroy {
-
-	defaultStatistics = {
-		id: "",
-		learnedWords: 0,
-		optional: {
-			statistics: {
-				array: [],
-			},
-		},
-	};
 
 	constructor(public serverService: ServerService, private router: Router, private store$: Store) {
 		this.getUserInfo();
@@ -39,7 +30,7 @@ export class AppComponent implements OnDestroy {
 		this.router.navigateByUrl("/authorization");
 
 		this.store$.dispatch(StoreActions.getNewWordsSucces({newWords: []}));
-		this.store$.dispatch(StoreActions.statisticsSucces({statistics: JSON.parse(JSON.stringify(this.defaultStatistics))}));
+		this.store$.dispatch(StoreActions.statisticsSucces({statistics: this.serverService.defaultStatistics}));
 		this.serverService.username = "";
 	}
 

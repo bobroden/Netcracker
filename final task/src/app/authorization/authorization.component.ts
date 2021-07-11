@@ -16,19 +16,19 @@ export class AuthorizationComponent implements OnInit, OnDestroy {
 	obsOne: Subscription;
 	obsTwo: Subscription;
 
-	hide = true;
+	hide: boolean = true;
 
 	emailControl: FormControl;
 	passwordControl: FormControl;
 
-	email: String;
-	password: String;
+	email: string;
+	password: string;
 
 	ngOnInit(): void {
 		this.emailControl = new FormControl("", [Validators.required, Validators.pattern(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)]);
 		this.passwordControl = new FormControl("", [Validators.required, Validators.pattern(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,15}$/)]);
-		this.obsOne = this.emailControl.valueChanges.subscribe((value) =>  this.email = value);
-		this.obsTwo = this.passwordControl.valueChanges.subscribe((value) =>  this.password = value);
+		this.obsOne = this.emailControl.valueChanges.subscribe((value: string): string => this.email = value);
+		this.obsTwo = this.passwordControl.valueChanges.subscribe((value: string): string => this.password = value);
 	}
 
 	ngOnDestroy(): void {

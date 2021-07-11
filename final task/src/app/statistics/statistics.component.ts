@@ -3,7 +3,7 @@ import { Store } from "@ngrx/store";
 import { Chart } from "angular-highcharts";
 import { Options } from "highcharts";
 import { Subscription } from "rxjs";
-import { Statistics } from "../interfaces";
+import { Statistics, StatisticsDay } from "../interfaces";
 import { ServerService } from "../shared/server.service";
 import { StoreSelectors } from "../store/store.selectors";
 
@@ -65,7 +65,7 @@ export class StatisticsComponent implements OnInit, OnDestroy {
 	};
 
 	getArrays(): void {
-		this.serverService.statistics.optional.statistics.array.forEach((item) => {
+		this.serverService.statistics.optional.statistics.array.forEach((item: StatisticsDay) => {
 			this.datesArr.push(item.date);
 			this.rightsArr.push(item.rightWords);
 			this.wrongsArr.push(item.wrongWords);

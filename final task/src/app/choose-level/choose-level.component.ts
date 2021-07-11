@@ -13,11 +13,11 @@ export class ChooseLevelComponent implements OnInit {
 
 	constructor(private serverService: ServerService, private router: Router, private store$: Store) { }
 
-	page = "1";
-	group = "1";
+	page: string = "1";
+	group: string = "1";
 
-	groups = ["1", "2", "3", "4", "5", "6"];
-	pages = new Array(30).fill(0).map((item, index) => String(++index));
+	groups: string[] = ["1", "2", "3", "4", "5", "6"];
+	pages: string[] = new Array(30).fill(0).map((item, index) => String(++index));
 
 	ngOnInit(): void {
 	}

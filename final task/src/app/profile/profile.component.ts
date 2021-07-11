@@ -24,7 +24,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
 	username = this.serverService.username;
 	password = this.serverService.password;
 
-	hide = true;
+	hide: boolean = true;
 
 	emailControl: FormControl;
 	usernameControl: FormControl;
@@ -34,9 +34,9 @@ export class ProfileComponent implements OnInit, OnDestroy {
 		this.emailControl = new FormControl(this.email, [Validators.required, Validators.pattern(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)]);
 		this.usernameControl = new FormControl(this.username);
 		this.passwordControl = new FormControl(this.password, [Validators.required, Validators.pattern(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,15}$/)]);
-		this.obsOne = this.emailControl.valueChanges.subscribe((value) =>  this.email = value);
-		this.obsTwo = this.usernameControl.valueChanges.subscribe((value) =>  this.username = value);
-		this.obsThree = this.passwordControl.valueChanges.subscribe((value) =>  this.password = value);
+		this.obsOne = this.emailControl.valueChanges.subscribe((value: string): string =>  this.email = value);
+		this.obsTwo = this.usernameControl.valueChanges.subscribe((value: string): string =>  this.username = value);
+		this.obsThree = this.passwordControl.valueChanges.subscribe((value: string): string =>  this.password = value);
 	}
 
 	ngOnDestroy(): void {

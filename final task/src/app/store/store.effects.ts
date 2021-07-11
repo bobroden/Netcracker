@@ -17,7 +17,6 @@ export class StoreEffects {
 				this.serverService.getWords().pipe(
 					map((data: Word[]) => {
 						this.serverService.load = false;
-						console.log(data);
 						return StoreActions.getNewWordsSucces({newWords: data});
 					}),
 					catchError(() => {
@@ -36,8 +35,7 @@ export class StoreEffects {
 				this.serverService.getStatistics().pipe(
 					map((data: Statistics) => {
 						this.serverService.load = false;
-						console.log(data);
-						return StoreActions.statisticsSucces({statistics: JSON.parse(JSON.stringify(data))});
+						return StoreActions.statisticsSucces({statistics: data});
 					}),
 					catchError(() => {
 						this.serverService.load = false;

@@ -13,19 +13,19 @@ declare let webkitSpeechRecognition;
 export class AudiotalkService {
 
 	recognition = new webkitSpeechRecognition();
-	isStoppedSpeechRecog = false;
+	isStoppedSpeechRecog: boolean = false;
 	text: string;
-	index = 0;
+	index: number = 0;
 
-	rightWords = 0;
-	wrongWords = 0;
+	rightWords: number = 0;
+	wrongWords: number = 0;
 
 	constructor(private serverService: ServerService, private router: Router, private store$: Store) {
 		this.recognition.interimResults = true;
 		this.recognition.lang = "en-US";
 
 		this.recognition.addEventListener("result", (e) => {
-			const result = e.results[e.resultIndex];
+			const result: SpeechRecognitionResult = e.results[e.resultIndex];
 			if (result.isFinal) {
 				this.text = result[0].transcript.toLowerCase();
 				this.text.replace(/\./g, "");
@@ -34,12 +34,12 @@ export class AudiotalkService {
 					this.text = "";
 					this.serverService.currentWord = this.serverService.currentWords[this.index];
 					this.rightWords++;
-					const audio = new Audio();
+					const audio: HTMLAudioElement = new Audio();
 					audio.src = "../../assets/correct.mp3";
 					audio.play();
 				} else {
 					this.wrongWords++;
-					const audio = new Audio();
+					const audio: HTMLAudioElement = new Audio();
 					audio.src = "../../assets/error.mp3";
 					audio.play();
 				}
@@ -50,7 +50,6 @@ export class AudiotalkService {
 		this.recognition.addEventListener("end", (condition) => {
 			if (this.isStoppedSpeechRecog) {
 				this.recognition.stop();
-				console.log("End speech recognition");
 			} else {
 				this.recognition.start();
 			}
@@ -60,8 +59,8 @@ export class AudiotalkService {
 	checkIndex(): void {
 		if (this.index === 20) {
 			this.index = 0;
-			const date = new Date();
-			const date_str = date.getDate() + "." + (date.getMonth() + 1) + "." + date.getFullYear();
+			const date: Date = new Date();
+			const date_str: string = date.getDate() + "." + (date.getMonth() + 1) + "." + date.getFullYear();
 			if (this.serverService.statistics.optional.statistics.array.length !== 0 && date_str === this.serverService.statistics.optional.statistics.array[this.serverService.statistics.optional.statistics.array.length - 1].date) {
 					this.serverService.statistics.optional.statistics.array[this.serverService.statistics.optional.statistics.array.length - 1].rightWords += this.rightWords;
 					this.serverService.statistics.optional.statistics.array[this.serverService.statistics.optional.statistics.array.length - 1].wrongWords += this.wrongWords;
@@ -86,12 +85,10 @@ export class AudiotalkService {
 	start(): void {
 		this.isStoppedSpeechRecog = false;
 		this.recognition.start();
-		console.log("Speech recognition started");
 	}
 
 	stop(): void {
 		this.isStoppedSpeechRecog = true;
 		this.recognition.stop();
-		console.log("End speech recognition");
 	}
 }

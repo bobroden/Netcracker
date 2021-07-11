@@ -27,7 +27,7 @@ export class TextbookComponent implements OnInit {
 	page: string;
 	group: string;
 
-	showTranslation = false;
+	showTranslation: boolean = false;
 
 	changeWords(page: string, group: string): void {
 		this.serverService.page = page;
@@ -39,8 +39,8 @@ export class TextbookComponent implements OnInit {
 	}
 
 	playSound(index: number): void {
-		const src = `https://raw.githubusercontent.com/bobroden/LearnWords/master/${this.serverService.currentWords[index].audio}`;
-		const audio = new Audio();
+		const src: string = `https://raw.githubusercontent.com/bobroden/LearnWords/master/${this.serverService.currentWords[index].audio}`;
+		const audio: HTMLAudioElement = new Audio();
 		audio.src = src;
 		audio.play();
 	}
@@ -56,13 +56,13 @@ export class TextbookComponent implements OnInit {
 	showPrevWords(): void {
 		if (this.page === "0" && this.group !== "0") {
 			this.page = "29";
-			let group = +this.group;
+			let group: number = +this.group;
 			this.group = String(--group);
 			localStorage.setItem("page", this.page);
 			localStorage.setItem("group", this.group);
 			this.changeWords(this.page, this.group);
 		} else if (this.page !== "0") {
-			let page = +this.page;
+			let page: number = +this.page;
 			this.page = String(--page);
 			localStorage.setItem("page", this.page);
 			this.changeWords(this.page, this.group);
@@ -72,13 +72,13 @@ export class TextbookComponent implements OnInit {
 	showNextWords(): void {
 		if (this.page === "29" && this.group !== "5") {
 			this.page = "0";
-			let group = +this.group;
+			let group: number = +this.group;
 			this.group = String(++group);
 			localStorage.setItem("page", this.page);
 			localStorage.setItem("group", this.group);
 			this.changeWords(this.page, this.group);
 		} else if (this.page !== "29") {
-			let page = +this.page;
+			let page: number = +this.page;
 			this.page = String(++page);
 			localStorage.setItem("page", this.page);
 			this.changeWords(this.page, this.group);
