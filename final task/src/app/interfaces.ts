@@ -18,5 +18,9 @@ export interface Word {
 
 export interface Statistics {
 	learnedWords: number;
-	optional: object;
+	optional: {
+		statistics: {
+			array: Word[]
+		}
+	};
 }

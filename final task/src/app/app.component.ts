@@ -38,22 +38,12 @@ export class AppComponent implements OnDestroy {
 		this.serverService.isAuth = false;
 		this.router.navigateByUrl("/authorization");
 
-		this.store$.dispatch(StoreActions.getNewWords({newWords: []}));
-		this.store$.dispatch(StoreActions.userId({userId: ""}));
-		this.store$.dispatch(StoreActions.token({token: ""}));
-		this.store$.dispatch(StoreActions.email({email: ""}));
-		this.store$.dispatch(StoreActions.password({password: ""}));
-		this.store$.dispatch(StoreActions.statistics({statistics: JSON.parse(JSON.stringify(this.defaultStatistics))}));
+		this.store$.dispatch(StoreActions.getNewWordsSucces({newWords: []}));
+		this.store$.dispatch(StoreActions.statisticsSucces({statistics: JSON.parse(JSON.stringify(this.defaultStatistics))}));
 		this.serverService.username = "";
 	}
 
 	ngOnDestroy(): void {
 		this.serverService.words$.unsubscribe();
-
-		this.serverService.userId$.unsubscribe();
-		this.serverService.token$.unsubscribe();
-
-		this.serverService.email$.unsubscribe();
-		this.serverService.password$.unsubscribe();
 	}
 }

@@ -16,14 +16,14 @@ export class StatisticsComponent implements OnInit, OnDestroy {
 
 	constructor(public serverService: ServerService, private store$: Store) {
 		this.statistics$ = this.store$.select(StoreSelectors.statistics).subscribe(statistics => {
-			this.statistics = {...statistics};
+			this.serverService.statistics.learnedWords = statistics.learnedWords;
+			this.serverService.statistics.optional = JSON.parse(JSON.stringify(statistics.optional));
 			this.getArrays();
 			this.chart = new Chart(this.options);
 		});
 	}
 
 	chart: Chart;
-	statistics: Statistics;
 	statistics$: Subscription;
 
 	datesArr: string[] = [];

@@ -1,7 +1,11 @@
 import { Component, OnDestroy, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
+import { Store } from "@ngrx/store";
+import { Subscription } from "rxjs";
 import { AudiotalkService } from "../shared/audiotalk.service";
 import { ServerService } from "../shared/server.service";
+import { StoreActions } from "../store/store.actions";
+import { StoreSelectors } from "../store/store.selectors";
 
 @Component({
 	selector: "app-game",
@@ -10,28 +14,30 @@ import { ServerService } from "../shared/server.service";
 })
 export class GameComponent implements OnInit, OnDestroy {
 
-	constructor(public audioTalkService: AudiotalkService, public serverService: ServerService, private router: Router) {
+	constructor(public audioTalkService: AudiotalkService, public serverService: ServerService, private router: Router, private store$: Store) {
 		if (this.serverService.currentWords.length === 0) {
 			const page = localStorage.getItem("page");
 			const group = localStorage.getItem("group");
 			if (page === null || group === null) {
 				this.router.navigateByUrl("/main");
 			}
-			this.serverService.getWords(page, group).then(() => {
-			this.serverService.shuffle();
-		});
-		} else {
-			this.serverService.shuffle();
+			this.serverService.page = page;
+			this.serverService.group = group;
+			this.store$.dispatch(StoreActions.getNewWords());
 		}
+		this.words$ = this.store$.select(StoreSelectors.currentWords).subscribe(() => this.serverService.shuffle());
 		this.start();
 		this.audioTalkService.rightWords = 0;
 		this.audioTalkService.wrongWords = 0;
 	}
 
+	words$: Subscription;
+
 	ngOnInit(): void {}
 
 	ngOnDestroy(): void {
 		this.stop();
+		this.words$.unsubscribe();
 	}
 
 	start(): void {

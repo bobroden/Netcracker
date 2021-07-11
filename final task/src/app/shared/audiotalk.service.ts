@@ -1,6 +1,8 @@
 import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
+import { Store } from "@ngrx/store";
 import { ServerService } from "../shared/server.service";
+import { StoreActions } from "../store/store.actions";
 
 declare let webkitSpeechRecognition;
 
@@ -18,7 +20,7 @@ export class AudiotalkService {
 	rightWords = 0;
 	wrongWords = 0;
 
-	constructor(private serverService: ServerService, private router: Router) {
+	constructor(private serverService: ServerService, private router: Router, private store$: Store) {
 		this.recognition.interimResults = true;
 		this.recognition.lang = "en-US";
 
@@ -72,6 +74,7 @@ export class AudiotalkService {
 			}
 			if (this.serverService.isAuth) {
 				this.serverService.putStatistics(this.serverService.statistics);
+				this.store$.dispatch(StoreActions.statisticsSucces({statistics: JSON.parse(JSON.stringify(this.serverService.statistics))}));
 				this.router.navigateByUrl("/statistics");
 			} else {
 				this.router.navigateByUrl("/main");

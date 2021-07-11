@@ -1,5 +1,7 @@
+import { HttpClientModule } from "@angular/common/http";
 import { NgModule } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
+import { EffectsModule } from "@ngrx/effects";
 import { StoreModule } from "@ngrx/store";
 import { StoreDevtoolsModule } from "@ngrx/store-devtools";
 import { ChartModule } from "angular-highcharts";
@@ -22,6 +24,7 @@ import { PageNotFoundedComponent } from "./page-not-founded/page-not-founded.com
 import { ProfileComponent } from "./profile/profile.component";
 import { RegistrationComponent } from "./registration/registration.component";
 import { StatisticsComponent } from "./statistics/statistics.component";
+import { StoreEffects } from "./store/store.effects";
 import { TextbookComponent } from "./textbook/textbook.component";
 
 const appRoutes: Routes = [
@@ -61,7 +64,9 @@ const appRoutes: Routes = [
 		ChartModule,
 		ReactiveFormsModule,
 		StoreModule.forRoot({store: fromReducer.reducer }),
+		EffectsModule.forRoot([StoreEffects]),
 		StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
+		HttpClientModule,
 	],
 	providers: [],
 	bootstrap: [AppComponent]

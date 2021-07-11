@@ -1,5 +1,7 @@
 import { Component, OnInit } from "@angular/core";
+import { Store } from "@ngrx/store";
 import { ServerService } from "../shared/server.service";
+import { StoreActions } from "../store/store.actions";
 
 @Component({
 	selector: "app-textbook",
@@ -8,7 +10,7 @@ import { ServerService } from "../shared/server.service";
 })
 export class TextbookComponent implements OnInit {
 
-	constructor(public serverService: ServerService) {
+	constructor(public serverService: ServerService, private store$: Store) {
 		this.page = localStorage.getItem("page");
 		this.group = localStorage.getItem("group");
 		if (this.page === null) {
@@ -17,13 +19,21 @@ export class TextbookComponent implements OnInit {
 		if (this.group === null) {
 			this.group = "0";
 		}
-		this.serverService.getWords(this.page, this.group);
+		this.serverService.page = this.page;
+		this.serverService.group = this.group;
+		this.store$.dispatch(StoreActions.getNewWords());
 	}
 
 	page: string;
 	group: string;
 
 	showTranslation = false;
+
+	changeWords(page: string, group: string): void {
+		this.serverService.page = page;
+		this.serverService.group = group;
+		this.store$.dispatch(StoreActions.getNewWords());
+	}
 
 	ngOnInit(): void {
 	}
@@ -40,7 +50,7 @@ export class TextbookComponent implements OnInit {
 		this.page = "0";
 		localStorage.setItem("page", this.page);
 		localStorage.setItem("group", this.group);
-		this.serverService.getWords(this.page, this.group);
+		this.changeWords(this.page, this.group);
 	}
 
 	showPrevWords(): void {
@@ -50,12 +60,12 @@ export class TextbookComponent implements OnInit {
 			this.group = String(--group);
 			localStorage.setItem("page", this.page);
 			localStorage.setItem("group", this.group);
-			this.serverService.getWords(this.page, this.group);
+			this.changeWords(this.page, this.group);
 		} else if (this.page !== "0") {
 			let page = +this.page;
 			this.page = String(--page);
 			localStorage.setItem("page", this.page);
-			this.serverService.getWords(this.page, this.group);
+			this.changeWords(this.page, this.group);
 		}
 	}
 
@@ -66,12 +76,12 @@ export class TextbookComponent implements OnInit {
 			this.group = String(++group);
 			localStorage.setItem("page", this.page);
 			localStorage.setItem("group", this.group);
-			this.serverService.getWords(this.page, this.group);
+			this.changeWords(this.page, this.group);
 		} else if (this.page !== "29") {
 			let page = +this.page;
 			this.page = String(++page);
 			localStorage.setItem("page", this.page);
-			this.serverService.getWords(this.page, this.group);
+			this.changeWords(this.page, this.group);
 		}
 	}
 

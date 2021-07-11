@@ -1,8 +1,10 @@
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { Router } from "@angular/router";
 import { Store } from "@ngrx/store";
-import { Observable, Subscription } from "rxjs";
+import { EMPTY, Observable, Subscription } from "rxjs";
+import { catchError, map, tap } from "rxjs/operators";
 import { DialogSignInWindowComponent } from "../dialog-sign-in-window/dialog-sign-in-window.component";
 import { DialogWindowComponent } from "../dialog-window/dialog-window.component";
 import { Statistics, Word } from "../interfaces";
@@ -14,14 +16,23 @@ import { StoreSelectors } from "../store/store.selectors";
 })
 export class ServerService {
 
-	constructor(private router: Router, private dialog: MatDialog, private store$: Store) {
-		this.words$ = this.store$.select(StoreSelectors.currentWords).subscribe(currentWords => this.currentWords = [...currentWords]);
-
-		this.userId$ = this.store$.select(StoreSelectors.userId).subscribe(userId => this.userId = userId);
-		this.token$ = this.store$.select(StoreSelectors.token).subscribe(token => this.token = token);
-
-		this.email$ = this.store$.select(StoreSelectors.email).subscribe(email => this.email = email);
-		this.password$ = this.store$.select(StoreSelectors.password).subscribe(password => this.password = password);
+	constructor(private router: Router, private dialog: MatDialog, private store$: Store, private http: HttpClient) {
+		this.words$ = this.store$.select(StoreSelectors.currentWords).pipe(
+			tap(() => console.log("Successfully loading the list of current words!")),
+			map(arr => arr.slice().sort((a, b) => {
+				if (a.word > b.word) {
+					return 1;
+				}
+				if (a.word < b.word) {
+					return -1;
+				}
+			})),
+			catchError(err => {
+				console.log("Something's wrong!:(");
+				return EMPTY;
+			}),
+		)
+		.subscribe(currentWords => this.currentWords = [...currentWords]);
 
 		this.email = localStorage.getItem("email");
 		this.username = localStorage.getItem("username");
@@ -29,10 +40,6 @@ export class ServerService {
 	}
 
 	words$: Subscription;
-	userId$: Subscription;
-	token$: Subscription;
-	email$: Subscription;
-	password$: Subscription;
 
 	token: string;
 	userId: string;
@@ -42,6 +49,9 @@ export class ServerService {
 	email: string;
 	username: string;
 	password: string;
+
+	page: string;
+	group: string;
 
 	isAuth: boolean;
 
@@ -85,11 +95,11 @@ export class ServerService {
 			});
 			const content = await rawResponse.json();
 
-			this.store$.dispatch(StoreActions.userId({userId: content.userId}));
-			this.store$.dispatch(StoreActions.token({token: content.token}));
+			this.userId = content.userId;
+			this.token = content.token;
 
-			this.store$.dispatch(StoreActions.email({email: user.email}));
-			this.store$.dispatch(StoreActions.password({password: user.password}));
+			this.email = user.email;
+			this.password = user.password;
 
 			if (this.username === null || this.username === "null" || this.username === "") {
 				this.getUsername(this.userId);
@@ -99,7 +109,7 @@ export class ServerService {
 			localStorage.setItem("password", this.password);
 			console.log(content);
 
-			this.getStatistics(this.userId);
+			this.store$.dispatch(StoreActions.statistics());
 
 			if (this.router.url === "/registration" || this.router.url === "/authorization") {
 				this.router.navigateByUrl("/main");
@@ -152,11 +162,11 @@ export class ServerService {
 			});
 			const content = await rawResponse.json();
 
-			this.store$.dispatch(StoreActions.userId({userId: content.userId}));
-			this.store$.dispatch(StoreActions.token({token: content.token}));
+			this.userId = content.userId;
+			this.token = content.token;
 
-			this.store$.dispatch(StoreActions.email({email: user.email}));
-			this.store$.dispatch(StoreActions.password({password: user.password}));
+			this.email = user.email;
+			this.password = user.password;
 
 			localStorage.setItem("email", this.email);
 			localStorage.setItem("username", this.username);
@@ -189,8 +199,8 @@ export class ServerService {
 			});
 			const content = await rawResponse.json();
 
-			this.store$.dispatch(StoreActions.email({email: user.email}));
-			this.store$.dispatch(StoreActions.password({password: user.password}));
+			this.email = user.email;
+			this.password = this.password;
 
 			if (user.username) {
 				this.username = user.username;
@@ -209,57 +219,32 @@ export class ServerService {
 		}
 	};
 
-	getWords = async (page, group) => {
-		try {
-			this.load = true;
-			const rawResponse = await fetch(`https://arcane-stream-07325.herokuapp.com/words?page=${page}&group=${group}`, {
-				method: "GET",
-				headers: {
-					"Authorization": `Bearer ${this.token}`,
-					"Accept": "application/json",
-					"Content-Type": "application/json"
-				},
-			});
-			const content = await rawResponse.json();
+	getWords = (page = this.page, group = this.group) => {
+		this.load = true;
+		const httpOptions = {
+			headers: new HttpHeaders ({
+				"Authorization": `Bearer ${this.token}`,
+				"Accept": "application/json",
+				"Content-Type": "application/json"
+			},
+		)};
 
-			this.store$.dispatch(StoreActions.getNewWords({newWords: content}));
+		localStorage.setItem("page", page);
+		localStorage.setItem("group", group);
 
-			localStorage.setItem("page", page);
-			localStorage.setItem("group", group);
-
-			console.log(content);
-			this.load = false;
-		} catch {
-			alert("No!");
-			this.load = false;
-		}
+		return this.http.get(`https://arcane-stream-07325.herokuapp.com/words?page=${page}&group=${group}`, httpOptions);
 	};
 
-	getStatistics = async userId => {
-		try {
-			this.load = true;
-			const rawResponse = await fetch(`https://arcane-stream-07325.herokuapp.com/users/${this.userId}/statistics`, {
-				method: "GET",
-				headers: {
-					"Authorization": `Bearer ${this.token}`,
-					"Accept": "application/json",
-					"Content-Type": "application/json"
-				},
-			});
-			const content = await rawResponse.json();
-
-			this.statistics.learnedWords = content.learnedWords;
-			this.statistics.optional = content.optional;
-
-			this.store$.dispatch(StoreActions.statistics({statistics: JSON.parse(JSON.stringify(this.statistics))}));
-
-			console.log(content);
-			this.load = false;
-		} catch {
-			console.log("No statistics yet!");
-			this.store$.dispatch(StoreActions.statistics({statistics: JSON.parse(JSON.stringify(this.defaultStatistics))}));
-			this.load = false;
-		}
+	getStatistics = () => {
+		this.load = true;
+		const httpOptions = {
+			headers: new HttpHeaders ({
+				"Authorization": `Bearer ${this.token}`,
+				"Accept": "application/json",
+				"Content-Type": "application/json"
+			},
+		)};
+		return this.http.get(`https://arcane-stream-07325.herokuapp.com/users/${this.userId}/statistics`, httpOptions);
 	};
 
 	putStatistics = async (statisc) => {

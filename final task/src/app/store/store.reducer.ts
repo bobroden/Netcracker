@@ -4,19 +4,12 @@ import { StoreActions } from "./store.actions";
 
 export interface State {
 	currentWords: Word[];
-	userId: string;
-	token: string;
-	email: string;
-	password: string;
 	statistics: Statistics;
+	error?: string | null;
 }
 
 const initialState: State = {
 	currentWords: [],
-	userId: "",
-	token: "",
-	email: "",
-	password: "",
 	statistics: {
 		learnedWords: 0,
 		optional: {
@@ -29,29 +22,38 @@ const initialState: State = {
 
 const storeReducer = createReducer(
 	initialState,
-	on(StoreActions.getNewWords, (state, { newWords }) => ({
+	on(StoreActions.getNewWords, state => ({
+		...state,
+		error: null,
+	})),
+	on(StoreActions.getNewWordsSucces, (state, { newWords }) => ({
 		...state,
 		currentWords: newWords,
 	})),
-	on(StoreActions.userId, (state, {userId}) => ({
+	on(StoreActions.getNewWordsFailure, (state, { error }) => ({
 		...state,
-		userId: userId,
+		currentWords: [],
+		error: error,
 	})),
-	on(StoreActions.token, (state, {token}) => ({
+	on(StoreActions.statistics, state => ({
 		...state,
-		token: token,
+		error: null,
 	})),
-	on(StoreActions.email, (state, {email}) => ({
-		...state,
-		email: email,
-	})),
-	on(StoreActions.password, (state, {password}) => ({
-		...state,
-		password: password,
-	})),
-	on(StoreActions.statistics, (state, {statistics}) => ({
+	on(StoreActions.statisticsSucces, (state, {statistics}) => ({
 		...state,
 		statistics: {...statistics},
+	})),
+	on(StoreActions.statisticsFailure, (state, { error }) => ({
+		...state,
+		statistics: {
+			learnedWords: 0,
+			optional: {
+				statistics: {
+					array: [],
+				},
+			},
+		},
+		error: error,
 	})),
 );
 
